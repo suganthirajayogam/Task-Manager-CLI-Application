@@ -1,91 +1,99 @@
-# Task-Manager-CLI-Application
-import json
+TASK MANAGER CLI APPLICATION:
 
-class Task:
-    def __init__(self, task_id, title, completed=False):
-        self.id = task_id
-        self.title = title
-        self.completed = completed
-
-    def __repr__(self):
-        status = "Completed" if self.completed else "Pending"
-        return f"Task({self.id}, {self.title}, {status})"
+ OVERVIEW:
+     The Task Manager CLI Application is a Python-based command-line tool designed to help users efficiently manage their tasks. With a focus on simplicity and usability, this application allows users to add, view, update, and delete tasks from the command line.
+Objectives:
+The objectives of the Task Manager CLI Application are:
+•	To provide an intuitive command-line interface for users to manage their tasks without the need for a graphical user interface (GUI).
+•	To allow users to add, view, and delete tasks, as well as mark tasks as completed, promoting better organization and task tracking.
+•	To implement persistent storage, ensuring that users can save and load their tasks from a file, enabling seamless continuation of their task management.
 
 
-tasks = []
+Features
+Add Task: Create new tasks with a title and description.
+View Tasks: Display all tasks along with their completion status.
+Update Task: Modify task details, including changing status.
+Delete Task: Remove unnecessary tasks from the list.
+Search Tasks: Find tasks using keywords in titles or descriptions.
 
-def add_task(title):
-    # Check for duplicate titles
-    if any(task.title == title for task in tasks):
-        print(f"A task with the title '{title}' already exists.")
-        return
-    
-    task_id = len(tasks) + 1
-    task = Task(task_id, title)
-    tasks.append(task)
-    print(f"Task '{title}' added successfully.")
+Technologies Used
+•	Programming Language: Python
+•	Data Storage: JSON file format for saving and loading tasks
 
-def view_tasks():
-    if not tasks:
-        print("No tasks available.")
-    else:
-        for task in tasks:
-            print(task)
 
-def delete_task(task_id):
-    global tasks
-    tasks = [task for task in tasks if task.id != task_id]
+How to run it on command line interface
+1.Open command Prompt.
+2. Use the cd (change directory) command to navigate to the location where you want to create your project folder.
+           
+3. Create the folder (directory).
+Use the mkdir command (short for "make directory") to create a folder. Name the folder task_manager.
 
-def mark_task_complete(task_id):
-    for task in tasks:
-        if task.id == task_id:
-            task.completed = True
-            break
 
-def save_tasks(filename='tasks.json'):
-    with open(filename, 'w') as file:
-        json.dump([task.__dict__ for task in tasks], file)
+4.Navigate into folder
+After creating the folder, you can navigate inside it using the cd command.
 
-def load_tasks(filename='tasks.json'):
-    try:
-        with open(filename, 'r') as file:
-            task_list = json.load(file)
-            for task_dict in task_list:
-                task = Task(task_dict['id'], task_dict['title'], task_dict['completed'])
-                tasks.append(task)
-    except FileNotFoundError:
-        pass
 
-def show_menu():
-    print("\n1. Add Task")
-    print("2. View Tasks")
-    print("3. Delete Task")
-    print("4. Mark Task as Complete")
-    print("5. Exit")
+5. Once you’ve created task_manager.py, you can start writing your Python code and run it on command prompt
 
-def main():
-    load_tasks()  # Load tasks on start
-    while True:
-        show_menu()
-        choice = input("\nEnter your choice: ")
-        
-        if choice == '1':
-            title = input("Enter task title: ")
-            add_task(title)
-        elif choice == '2':
-            view_tasks()
-        elif choice == '3':
-            task_id = int(input("Enter task ID to delete: "))
-            delete_task(task_id)
-        elif choice == '4':
-            task_id = int(input("Enter task ID to mark as complete: "))
-            mark_task_complete(task_id)
-        elif choice == '5':
-            save_tasks()  # Save tasks before exiting
-            print("Exiting...")
-            break
-        else:
-            print("Invalid choice. Please try again.")
+Program Explaination:
+import json: This imports the JSON module, which is used for saving and loading tasks from a file.
+class Task: This defines a Task class that represents a task in the application.
+Attributes:
+i).id: An integer that uniquely identifies each task.
+ii).title: A string representing the title of the task.
+completed: A boolean that indicates whether the task has been completed.
+iii).__repr__ method: This method defines how to represent a Task object as a string, showing the task's ID, title, and status.
+iv) tasks: A list to store all the Task objects created by the user.: A list to store all the Task objects created by the user.
+v). Adding a Task: This function creates a new task:
+•	Calculates the task_id based on the current length of the tasks list.
+•	Creates a new Task object and appends it to the tasks list.
+vi) Viewing Tasks: This function displays all tasks:
+•	If no tasks are available, it informs the user.
+•	Otherwise, it iterates through the tasks list and prints each task using its string representation.
+vii).Delete Task: This function removes a task by its ID:
+viii).Save task function: this function saves the current tasks to a JSON file:
+It uses json.dump() to serialize the list of task dictionaries into a file
+ix).Loading Task: This function loads tasks from a JSON file:
+It reads the JSON file and reconstructs Task objects from the stored dictionaries.
+If the file does not exist, it catches the exception and does nothing.
+x).command line interface:display menu wgile executing.
+xi)The Main fun():
+This is the main loop of the application:
+•	It loads tasks when the application starts.
+•	Displays the menu and takes user input.
+•	Based on the user's choice, it calls the corresponding function to manage tasks.
+•	When exiting, it saves the tasks to ensure no data is lost.
 
-if __name__ == "__main__":
-    main()
+
+
+
+
+Output:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Functionalities:
+•	The application starts, and the user is presented with a menu of options.
+•	The user selects an option (e.g., add a task) and follows the prompts.
+•	Based on user inputs, the corresponding function is executed (adding, viewing, deleting, or completing tasks).
+•	The user can repeat this process until they choose to exit, at which point their tasks are saved.
+
+
+
+Conclusion:
+The Task Manager CLI Application allows users to manage their tasks through a command-line interface, providing essential features like adding, viewing, deleting, and completing tasks. With persistent storage through JSON files, users can maintain their tasks across sessions, making it a valuable tool for personal productivity.
